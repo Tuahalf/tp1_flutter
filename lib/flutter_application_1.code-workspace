@@ -1,11 +1,4 @@
 {
-	"folders": [
-		{
-			"path": ".."
-		},
-		{
-			"path": "../../laravel/mon-premier-projet"
-		}
-	],
+	"folders": [],
 	"settings": {}
 }

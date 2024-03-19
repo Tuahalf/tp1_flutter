@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/screens/albumMEF.dart';
 
-class ParamBody extends StatefulWidget {
-  const ParamBody({Key? key}) : super(key: key);
+class DetailsAlbum extends StatefulWidget {
+  final String? nomAlbum;
+
+  const DetailsAlbum({Key? key, this.nomAlbum}) : super(key: key);
 
   @override
-  State<ParamBody> createState() => _ParamBody();
+  State<DetailsAlbum> createState() => _DetailsAlbumState();
 }
 
-class _ParamBody extends State<ParamBody> {
+class _DetailsAlbumState extends State<DetailsAlbum> {
+  late String? album;
   List<Map<String, dynamic>> listAlbum = [
     {
       'nomAlbum': "Metallica",
@@ -41,22 +43,46 @@ class _ParamBody extends State<ParamBody> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    album = widget.nomAlbum;
+  }
+  
+  @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.blue,
-      alignment: Alignment.center,
-      child: ListView(
-        children: [
-          for (Map<String, dynamic> albu in listAlbum)
-            Album(
-              nomAlbum: albu["nomAlbum"],
-              nomGroupe: albu["nomGroupe"],
-              description: albu["description"],
-              image: albu["image"],
-            ),
-        ],
+    Map<String, dynamic>? selectedAlbum;
+    for (var albumData in listAlbum) {
+      if (albumData['nomAlbum'] == album) {
+        selectedAlbum = albumData;
+        break;
+      }
+    }
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(selectedAlbum?['nomAlbum']),
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Image.asset("images/${selectedAlbum?['image']}"),
+              Text(
+                selectedAlbum?['nomAlbum'],
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 24,
+                ),
+              ),
+              Text(selectedAlbum?['nomGroupe']),
+              SizedBox(height: 10),
+              Text(selectedAlbum?['description']),
+            ],
+          ),
+        ),
       ),
     );
   }
 }
-

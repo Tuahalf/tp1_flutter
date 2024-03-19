@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_application_1/screens/albumMEF.dart';
+import 'package:flutter_application_1/screens/detailsAlbum.dart';
 
 class Accueil extends StatefulWidget {
   const Accueil({super.key});
@@ -8,92 +11,62 @@ class Accueil extends StatefulWidget {
 }
 
 class _Accueil extends State<Accueil> {
-  int _counter = 0;
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-  void _decrementCounter() {
-    setState(() {
-      _counter--;
-    });
-  }
+  List<Map<String, dynamic>> listAlbum = [
+    {
+      'nomAlbum': "Metallica",
+      'nomGroupe': "Metallica",
+      'description':
+          "L'album marque une évolution importante dans le style du groupe. Les tempos sont plus lents, les morceaux plus courts et leurs structures beaucoup plus simples, aspirant ainsi à du simple rock. C'est principalement un album de heavy metal, et il n'y a plus beaucoup de traces de thrash metal. ",
+      'image': "Metallica.jpg",
+    },
+    {
+      'nomAlbum': "Ride the Lightning",
+      'nomGroupe': "Metallica",
+      'description':
+          "Ride the Lightning est le deuxième album du groupe de thrash metal américain Metallica. Il est sorti le 27 juillet 1984 chez Megaforce Records et Music for Nations. Il est sorti chez Elektra Records le 19 novembre 1984 après que le groupe a signé chez ces derniers en septembre 1984. Ride the Lightning a été vendu à plus de six millions d'exemplaires rien qu'aux États-Unis et a été crédité sept fois disque de platine. ",
+      'image': "Ride the lightning.jpg",
+    },
+    {
+      'nomAlbum': "Master of Puppets",
+      'nomGroupe': "Metallica",
+      'description':
+          "Master of Puppets (littéralement Le Marionnettiste), sorti le 3 mars 19863, est le troisième album studio du groupe de thrash metal Metallica. C'est le dernier album du groupe avec le bassiste Cliff Burton, ce dernier décède en effet dans un accident de bus en Suède lors de la tournée de promotion de l'album.",
+      'image': "Master of puppets.jpg",
+    },
+    {
+      'nomAlbum': "…And Justice for All",
+      'nomGroupe': "Metallica",
+      'description':
+          "…And Justice for All est le quatrième album studio du groupe de thrash metal Metallica sorti le 25 août 1988 par Elektra Records.",
+      'image': "And justice for all.jpg",
+    }
+  ];
 
-  void _resetCounter() {
-    setState(() {
-      _counter = 0;
-    });
-  }
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: ListView(
-          children: <Widget>[
-            Center(
-              child: Image.network(
-                'https://cdn.pixabay.com/photo/2023/07/05/11/14/alpaca-8108043_1280.png',
-                width: 250,
-              ),
-            ),
-            Center(
-              child: Image.asset('images/full.png', width: 250, fit: BoxFit.scaleDown),
-            ),
-            Center(
-              child: const Text(
-                'Nombre:',
-              ),
-            ),
-            Center(
-              child: Text(
-                '$_counter',
-                style: Theme.of(context).textTheme.headline6,
-              ),
-            ),
-            OutlinedButton(
-                child: Text("-"),
-                style: OutlinedButton.styleFrom(
-                  primary: Colors.black,
-                  side: BorderSide(
-                    color: Colors.black,
-                  ),
+    return ListView(
+      children: [
+        for (Map<String, dynamic> albu in listAlbum)
+          GestureDetector(
+            onTap: () {
+              SystemChrome.setEnabledSystemUIMode(
+                SystemUiMode.immersive,
+              );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => DetailsAlbum(nomAlbum: albu["nomAlbum"]),
                 ),
-              onPressed: () {
-                setState(() {
-                   _decrementCounter();
-                });
-              },
+              );
+            },
+            child: Album(
+              nomAlbum: albu["nomAlbum"],
+              nomGroupe: albu["nomGroupe"],
+              description: albu["description"],
+              image: albu["image"],
             ),
-            OutlinedButton(
-                child: Text("Reset"),
-                style: OutlinedButton.styleFrom(
-                  primary: Colors.black,
-                  side: BorderSide(
-                    color: Colors.black,
-                  ),
-                ),
-              onPressed: () {
-                setState(() {
-                   _resetCounter();
-                });
-              },
-            ),
-            OutlinedButton(
-                child: Text("+"),
-                style: OutlinedButton.styleFrom(
-                  primary: Colors.black,
-                  side: BorderSide(
-                    color: Colors.black,
-                  ),
-                ),
-              onPressed: () {
-                setState(() {
-                   _incrementCounter();
-                });
-              },
-            ),
-          ],
-        ),
-      );
+          ),
+      ],
+    );
   }
 }
