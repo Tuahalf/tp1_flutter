@@ -36,7 +36,42 @@ class MyApp extends StatelessWidget {
       //theme: ThemeData(primarySwatch: Colors.indigo,),
       theme: theme,
 
-      home: const MyHomePage(title: 'Flutter'),
+      home: const SplashScreen(),
+    );
+  }
+}
+
+
+class SplashScreen extends StatelessWidget {
+  const SplashScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    // Attendez quelques secondes avant de naviguer vers l'écran principal
+    Future.delayed(const Duration(seconds: 5), () {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => const MyHomePage(title: 'Flutter')),
+      );
+    });
+
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/vinyle.jpg'),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          const Center(
+            child: CircularProgressIndicator(), // Spinner de chargement
+          ),
+        ],
+      ),
     );
   }
 }

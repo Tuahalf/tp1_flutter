@@ -58,26 +58,38 @@ class _DetailsAlbumState extends State<DetailsAlbum> {
       }
     }
 
+    var favoriAlbum = true;
     return Scaffold(
       appBar: AppBar(
         title: Text(selectedAlbum?['nomAlbum']),
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: favoriAlbum ? Colors.blue : Colors.grey, // Couleur de fond en fonction de l'état de favoriAlbum
+                ),
+                padding: EdgeInsets.all(8),
+                child: Icon(
+                  favoriAlbum ? Icons.star : Icons.star_border,
+                  color: favoriAlbum ? Colors.black : null,
+                ),
+              ),
               Image.asset("images/${selectedAlbum?['image']}"),
               Text(
                 selectedAlbum?['nomAlbum'],
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 24,
                 ),
               ),
               Text(selectedAlbum?['nomGroupe']),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Text(selectedAlbum?['description']),
             ],
           ),
@@ -86,3 +98,5 @@ class _DetailsAlbumState extends State<DetailsAlbum> {
     );
   }
 }
+
+
